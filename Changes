@@ -1,4 +1,9 @@
 ---
+version: 0.13
+date:    Wed Dec 15 15:48:06 PST 2004
+changes:
+- Make compatible with Kwiki-0.34
+---
 version: 0.12
 date:    Wed Aug 18 10:59:47 PDT 2004
 changes:

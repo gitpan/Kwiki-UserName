@@ -1,13 +1,10 @@
 package Kwiki::UserName;
-use strict;
-use warnings;
-use Kwiki::Plugin '-Base';
+use Kwiki::Plugin -Base;
 use mixin 'Kwiki::Installer';
 use Kwiki ':char_classes';
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 const class_id => 'user_name';
-const class_title => 'User Name';
 const css_file => 'user_name.css';
 
 sub register {
@@ -35,10 +32,9 @@ sub check_user_name {
       unless $value =~ /^[$ALPHANUM]+$/;
     return $preference->error('Must be less than 30 characters.')
       unless length($value) < 30;
-    $self->call_hooks;
+    return 1;
 }
 
-1;
 __DATA__
 
 =head1 NAME 
@@ -69,7 +65,6 @@ div#user_name_title {
     float: right;
 }
 __template/tt2/user_name_title.html__
-<!-- BEGIN user_name_title.html -->
 <div id="user_name_title">
 <em>(You are 
 <a href="[% script_name %]?action=user_preferences">
@@ -77,4 +72,3 @@ __template/tt2/user_name_title.html__
 </a>)
 </em>
 </div>
-<!-- END user_name_title.html -->
