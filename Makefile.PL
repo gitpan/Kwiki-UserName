@@ -8,8 +8,8 @@ version_from('lib/Kwiki/UserName.pm');
 
 requires(qw(
     perl 5.6.1
-    Kwiki 0.34
-    Kwiki::UserPreferences 0.12
+    Kwiki 0.37
+    Kwiki::UserPreferences 0.13
 ));
 
 check_nmake();

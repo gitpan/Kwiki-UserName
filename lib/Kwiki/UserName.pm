@@ -2,7 +2,7 @@ package Kwiki::UserName;
 use Kwiki::Plugin -Base;
 use mixin 'Kwiki::Installer';
 use Kwiki ':char_classes';
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 const class_id => 'user_name';
 const css_file => 'user_name.css';
@@ -32,6 +32,7 @@ sub check_user_name {
       unless $value =~ /^[$ALPHANUM]+$/;
     return $preference->error('Must be less than 30 characters.')
       unless length($value) < 30;
+    $self->users->current(undef);
     return 1;
 }
 
