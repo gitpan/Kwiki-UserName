@@ -2,9 +2,9 @@ package Kwiki::UserName;
 use strict;
 use warnings;
 use Kwiki::Plugin '-Base';
-use Kwiki::Installer '-Base';
+use mixin 'Kwiki::Installer';
 use Kwiki ':char_classes';
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 const class_id => 'user_name';
 const class_title => 'User Name';
@@ -13,9 +13,7 @@ const css_file => 'user_name.css';
 sub register {
     my $registry = shift;
     $registry->add(preload => 'user_name');
-    $registry->add(preference => 'user_name',
-                   object => $self->user_name,
-                  );
+    $registry->add(preference => $self->user_name);
 }
 
 sub user_name {
@@ -78,15 +76,12 @@ div#user_name_title {
     font-size: small;
     float: right;
 }
-div#user_name_title a:visited {
-    color: #d64;
-}
 __template/tt2/user_name_title.html__
 <!-- BEGIN user_name_title.html -->
 <div id="user_name_title">
 <em>(You are 
 <a href="[% script_name %]?action=user_preferences">
-[% hub.preferences.user_name.value || 'an AnonymousGnome' %]
+[% hub.users.current.name || 'an UnknownUser' %]
 </a>)
 </em>
 </div>
