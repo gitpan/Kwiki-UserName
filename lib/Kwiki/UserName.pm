@@ -4,7 +4,7 @@ use warnings;
 use Kwiki::Plugin '-Base';
 use mixin 'Kwiki::Installer';
 use Kwiki ':char_classes';
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 const class_id => 'user_name';
 const class_title => 'User Name';
@@ -29,21 +29,13 @@ sub user_name {
 sub check_user_name {
     my $preference = shift;
     my $value = $preference->new_value;
+    $self->utf8_decode($value);
     return unless length $value;
     return $preference->error('Must be all alphanumeric characters.')
       unless $value =~ /^[$ALPHANUM]+$/;
     return $preference->error('Must be less than 30 characters.')
       unless length($value) < 30;
     $self->call_hooks;
-}
-
-sub call_hooks {
-    my $hooks = $self->hub->registry->lookup->{user_name_hook}
-      or return;
-    for my $method (keys %$hooks) {
-        my $class_id = $hooks->{$method}[0];
-        $self->hub->load_class($class_id)->$method;
-    }
 }
 
 1;
@@ -81,7 +73,7 @@ __template/tt2/user_name_title.html__
 <div id="user_name_title">
 <em>(You are 
 <a href="[% script_name %]?action=user_preferences">
-[% hub.users.current.name || 'an UnknownUser' %]
+[%- hub.users.current.name || 'an UnknownUser' -%]
 </a>)
 </em>
 </div>
